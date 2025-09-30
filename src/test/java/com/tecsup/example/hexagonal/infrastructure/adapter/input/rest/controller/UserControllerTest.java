@@ -40,13 +40,14 @@ class UserControllerTest {
 
         Long ID = 50L;
         String NAME = "Juana";
+        String LASTNAME = "Perez";
         String EMAIL = "juana@demo.com";
 
         // Initial Condition
-        UserRequest request = new UserRequest(NAME, EMAIL);
-        User newUser = new User(null, NAME, EMAIL); // UserRequest
-        User savedUser = new User(ID, NAME, EMAIL);  // Save UserEntity
-        UserResponse response   = new UserResponse(ID, NAME, EMAIL);
+    UserRequest request = new UserRequest(NAME, LASTNAME, EMAIL);
+        User newUser = new User(null, NAME, LASTNAME,EMAIL); // UserRequest
+        User savedUser = new User(ID, NAME, LASTNAME,EMAIL);  // Save UserEntity
+        UserResponse response   = new UserResponse(ID, NAME, LASTNAME, EMAIL);
 
         // Mocking the repository behavior
         when(userMapper.toDomain(request)).thenReturn(newUser);

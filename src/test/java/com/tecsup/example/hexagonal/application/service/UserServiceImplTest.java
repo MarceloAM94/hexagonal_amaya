@@ -33,11 +33,12 @@ class UserServiceImplTest {
 
         Long ID = 50L;
         String NAME = "Juana";
+        String LASTNAME = "Perez";
         String EMAIL = "juana@demo.com";
 
         // Initial Condition
-        User newUser = new User(null, NAME, EMAIL); // UserRequest
-        User savedUser = new User(ID, NAME, EMAIL);  // Save UserEntity
+        User newUser = new User(null, NAME, LASTNAME ,EMAIL); // UserRequest
+        User savedUser = new User(ID, NAME, LASTNAME,EMAIL);  // Save UserEntity
 
         // Mocking the repository behavior
         when(userRepository.save(newUser)).thenReturn(savedUser);
@@ -49,6 +50,7 @@ class UserServiceImplTest {
         assertNotNull(realUser);
         assertEquals(ID, realUser.getId());
         assertEquals(NAME, realUser.getName());
+        assertEquals(LASTNAME, realUser.getLastName());
         assertEquals(EMAIL, realUser.getEmail());
 
     }
@@ -57,10 +59,11 @@ class UserServiceImplTest {
     void findUser() {
         Long ID = 100L;
         String NAME = "Jaime";
+        String LASTNAME = "Perez";
         String EMAIL = "jaime@demo.com";
 
         // Initial Condition
-        User existingUser = new User(ID, NAME, EMAIL);
+        User existingUser = new User(ID, NAME, LASTNAME, EMAIL);
 
         // Mocking the repository behavior
         when(userRepository.findById(100L)).thenReturn(Optional.of(existingUser));
@@ -74,6 +77,7 @@ class UserServiceImplTest {
         // hope values, real values
         assertEquals(ID, realUser.getId());
         assertEquals(NAME, realUser.getName());
+        assertEquals(LASTNAME, realUser.getLastName());
         assertEquals(EMAIL, realUser.getEmail());
 
     }
