@@ -9,6 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserRequest {
     private String name;
-    private String lastName;
+    private String lastName;        // Apellido paterno
+    private String motherLastName;  // Apellido materno
+    private Integer age;
+    private String dni;
+    private String phoneNumber;
     private String email;
 }

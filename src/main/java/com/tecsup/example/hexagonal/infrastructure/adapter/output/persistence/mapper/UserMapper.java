@@ -16,25 +16,37 @@ public interface UserMapper {
 
     /**
      * Convert User domain to UserEntity
-     * @param domain
-     * @return
      */
     UserEntity toEntity(User domain);
 
     /**
      * Convert UserEntity to User domain
-     * @param entity
-     * @return
      */
     User toDomain(UserEntity entity);
 
-
-    @Mapping(target = "id", ignore = true) // New users don't have ID
+    /**
+     * Convert UserRequest to User domain
+     */
+    @Mapping(target = "id", ignore = true) // El ID se genera automáticamente
     @Mapping(target = "name", source = "name")
     @Mapping(target = "lastName", source = "lastName")
+    @Mapping(target = "motherLastName", source = "motherLastName")
+    @Mapping(target = "age", source = "age")
+    @Mapping(target = "dni", source = "dni")
+    @Mapping(target = "phoneNumber", source = "phoneNumber")
     @Mapping(target = "email", source = "email")
     User toDomain(UserRequest request);
 
-
-    UserResponse toResponse(User createUser);
+    /**
+     * Convert User domain to UserResponse
+     */
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "lastName", source = "lastName")
+    @Mapping(target = "motherLastName", source = "motherLastName")
+    @Mapping(target = "age", source = "age")
+    @Mapping(target = "dni", source = "dni")
+    @Mapping(target = "phoneNumber", source = "phoneNumber")
+    @Mapping(target = "email", source = "email")
+    UserResponse toResponse(User user);
 }

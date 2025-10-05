@@ -22,8 +22,18 @@ public class UserEntity {
     @Column(nullable = false, length = 100)
     private String lastName;
 
+    @Column(length = 100)
+    private String motherLastName; // Apellido materno
+
+    @Column
+    private Integer age;
+
+    @Column(nullable = false, unique = true, length = 8)
+    private String dni;
+
+    @Column(length = 20)
+    private String phoneNumber;
+
     @Column(nullable = false, length = 150)
     private String email;
-
-
 }

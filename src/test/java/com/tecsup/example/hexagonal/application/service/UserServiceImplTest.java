@@ -24,77 +24,86 @@ class UserServiceImplTest {
 
     @BeforeEach
     void setup() {
-        // Aquí puedes inicializar los mocks y el servicio
         userService = new UserServiceImpl(userRepository);
     }
 
+    // =======================================================
+    // TEST 1: Crear Usuario
+    // =======================================================
     @Test
     void createUser() {
 
         Long ID = 50L;
         String NAME = "Juana";
         String LASTNAME = "Perez";
+        String MOTHERLASTNAME = "Gomez";
+        Integer AGE = 25;
+        String DNI = "98765432";
+        String PHONE = "999111222";
         String EMAIL = "juana@demo.com";
 
-        // Initial Condition
-        User newUser = new User(null, NAME, LASTNAME ,EMAIL); // UserRequest
-        User savedUser = new User(ID, NAME, LASTNAME,EMAIL);  // Save UserEntity
+        // Usuario nuevo (sin ID)
+        User newUser = new User(null, NAME, LASTNAME, MOTHERLASTNAME, AGE, DNI, PHONE, EMAIL);
 
-        // Mocking the repository behavior
+        // Usuario guardado (con ID)
+        User savedUser = new User(ID, NAME, LASTNAME, MOTHERLASTNAME, AGE, DNI, PHONE, EMAIL);
+
+        // Mock del repositorio
         when(userRepository.save(newUser)).thenReturn(savedUser);
 
-        // Execute the service method
+        // Ejecutar método del servicio
         User realUser = userService.createUser(newUser);
 
-        // Validate the results
+        // Validar resultados
         assertNotNull(realUser);
         assertEquals(ID, realUser.getId());
         assertEquals(NAME, realUser.getName());
         assertEquals(LASTNAME, realUser.getLastName());
+        assertEquals(MOTHERLASTNAME, realUser.getMotherLastName());
+        assertEquals(DNI, realUser.getDni());
+        assertEquals(PHONE, realUser.getPhoneNumber());
         assertEquals(EMAIL, realUser.getEmail());
-
     }
 
+    // =======================================================
+    // TEST 2: Buscar Usuario por ID
+    // =======================================================
     @Test
     void findUser() {
         Long ID = 100L;
         String NAME = "Jaime";
         String LASTNAME = "Perez";
+        String MOTHERLASTNAME = "Lopez";
+        Integer AGE = 30;
+        String DNI = "12345678";
+        String PHONE = "987654321";
         String EMAIL = "jaime@demo.com";
 
-        // Initial Condition
-        User existingUser = new User(ID, NAME, LASTNAME, EMAIL);
+        User existingUser = new User(ID, NAME, LASTNAME, MOTHERLASTNAME, AGE, DNI, PHONE, EMAIL);
 
-        // Mocking the repository behavior
-        when(userRepository.findById(100L)).thenReturn(Optional.of(existingUser));
+        when(userRepository.findById(ID)).thenReturn(Optional.of(existingUser));
 
-        // Execute the service method
-        User realUser = userService.findUser(100L);
+        User realUser = userService.findUser(ID);
 
-        // Validate the results
         assertNotNull(realUser);
-
-        // hope values, real values
         assertEquals(ID, realUser.getId());
         assertEquals(NAME, realUser.getName());
         assertEquals(LASTNAME, realUser.getLastName());
         assertEquals(EMAIL, realUser.getEmail());
-
     }
 
+    // =======================================================
+    // TEST 3: Buscar Usuario por ID - No existe
+    // =======================================================
     @Test
-    public void findUser_NotFound() {
-        Long ID_UNKNOW = 999L;
+    void findUser_NotFound() {
+        Long UNKNOWN_ID = 999L;
 
-        // Mocking the repository behavior to return empty
-        when(userRepository.findById(ID_UNKNOW)).thenReturn(Optional.empty());
+        when(userRepository.findById(UNKNOWN_ID)).thenReturn(Optional.empty());
 
-        // Execute the service method and expect an exception
         assertThrows(UserNotFoundException.class,
-                () -> userService.findUser(ID_UNKNOW));
-
+                () -> userService.findUser(UNKNOWN_ID));
     }
-
 }
 
 
